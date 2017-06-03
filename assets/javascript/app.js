@@ -29,6 +29,7 @@ $(".start-button").on("click", function(event){
 });
 
 
+
 //Function to provides question
 function fillDisplay() {
 	gameDisplay = "<p class='text-center timer-p'>Time Remaining: <span class ='timer'>20</span></p><p class = 'text-center'>" + questionArray[questionCounter] + "</p><p class ='answer'>" + answerArray[questionCounter][0] + "</p><p class = 'answer'>" + answerArray[questionCounter][1] + "</p><p class = 'answer'>" + answerArray[questionCounter][2] + "</p><p class = 'answer'>" + answerArray[questionCounter][3] + "</p>";
@@ -38,13 +39,13 @@ function fillDisplay() {
 
 //Function for the end of the game
 function endGame() {
-	gameDisplay = "<p class = 'text-center timer-p'>Time Remaining: <span class = 'timer'>" + counter + "</span></p>" + "<p class = 'text-center'>GAME OVER: RESULTS" + "</p>" + "<p class = 'totals'>Correct Answers : " + correctTotal + "</p>" + "<p>Incorrect Answers: " + incorrectTotal + "</p>";
+	gameDisplay = "<p class = 'text-center timer-p'>Time Remaining: <span class = 'timer'>" + counter + "</span></p>" + "<p class = 'text-center'>GAME OVER: RESULTS" + "</p>" + "<p class = 'totals'>Correct Answers : " + correctTotal + "</p>" + "<p>Incorrect Answers: " + incorrectTotal + "</p>" + "<p>" + "<a class='btn btn-primary btn-lg btn-block restart-button' href ='#' role='button'>Play Again</a>" + "</p>";
 	$(".main-space").html(gameDisplay);
-
 }
 
 
-//Function to switch to next question
+
+//Function to switch to next question 
 function nextQuestion(){
 	if(questionCounter <= 8) {
 		questionCounter++;
@@ -52,8 +53,17 @@ function nextQuestion(){
 		counter = 20;
 		runTimer();
 	}
+//Conditional that identifies when the game is over, displays the results and allows the user to restart
 	else if (questionCounter == 9) {
 		endGame();
+
+		$(".restart-button").on("click", function(event){
+		incorrectTotal = 0;
+		correctTotal = 0;
+		questionCounter = 0;
+		fillDisplay();
+		runTimer();
+		});
 	}
 }
 
