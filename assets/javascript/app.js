@@ -31,20 +31,28 @@ $(".start-button").on("click", function(event){
 
 //Function to provides question
 function fillDisplay() {
-	gameDisplay = "<p class='text-center timer-p'>Time Remaining: <span class ='timer'>20</span></p><p class = 'text-center'>" + questionArray[questionCounter] + "</p><p class ='answer'>1. " + answerArray[questionCounter][0] + "</p><p class = 'answer'>2. " + answerArray[questionCounter][1] + "</p><p class = 'answer'>3. " + answerArray[questionCounter][2] + "</p><p class = 'answer'>4. " + answerArray[questionCounter][3] + "</p>";
+	gameDisplay = "<p class='text-center timer-p'>Time Remaining: <span class ='timer'>20</span></p><p class = 'text-center'>" + questionArray[questionCounter] + "</p><p class ='answer'>" + answerArray[questionCounter][0] + "</p><p class = 'answer'>" + answerArray[questionCounter][1] + "</p><p class = 'answer'>" + answerArray[questionCounter][2] + "</p><p class = 'answer'>" + answerArray[questionCounter][3] + "</p>";
 	$(".main-space").html(gameDisplay);
+	console.log("Q #: "+ questionCounter);
+}
+
+//Function for the end of the game
+function endGame() {
+	gameDisplay = "<p class = 'text-center timer-p'>Time Remaining: <span class = 'timer'>" + counter + "</span></p>" + "<p class = 'text-center'>GAME OVER: RESULTS" + "</p>" + "<p class = 'totals'>Correct Answers : " + correctTotal + "</p>" + "<p>Incorrect Answers: " + incorrectTotal + "</p>";
+	$(".main-space").html(gameDisplay);
+
 }
 
 
 //Function to switch to next question
 function nextQuestion(){
-	if(questionCounter < 10) {
+	if(questionCounter <= 8) {
 		questionCounter++;
 		fillDisplay();
 		counter = 20;
 		runTimer();
 	}
-	else {
+	else if (questionCounter == 9) {
 		endGame();
 	}
 }
@@ -82,10 +90,6 @@ function timeoutLoss() {
 	nextQuestion();
 }
 
-//Function for the end of the game
-function endGame() {
-	gameDisplay = "<p class = 'text-center timer-p'>Time Remaining: <span class = 'timer'>" + counter + "</span></p>" + "<p class = 'text-center'>GAME OVER: RESULTS" + "</p>" + "<p class = 'totals'>Correct Answers : " + correctTotal + "</p>" + "<p>Incorrect Answers: " + incorrectTotal + "</p>";
-}
 
 //Function for countdown timer 
 function runTimer() {
@@ -108,10 +112,10 @@ function runTimer() {
 //Click events for picking answers
 $("body").on("click", ".answer", function(event){
 	answerPicked = $(this).text();
-	answerPicked = answerPicked.substr(3);
-	console.log("new:" + answerPicked);
-	console.log(correctAnswers[questionCounter]);
+	console.log("answer picked:" + answerPicked);
+	console.log("correct answer: " + correctAnswers[questionCounter]);
 	if(answerPicked == correctAnswers[questionCounter]) {
+		clearInterval(countdownTimer);
 		countCorrect();
 	}
 
@@ -125,5 +129,4 @@ $("body").on("click", ".answer", function(event){
 
 
 });
-
 
