@@ -2,22 +2,23 @@ $(document).ready(function() {
 //VARIABLES
 var startGame;
 var gameDisplay;
+var gameImage;
 var counter = 20;
 var questionCounter = 0;
-var questionArray = ["Question 1", "Question 2", "Question 3", "Question 4", "Question 5", "Question 6", "Question 7", "Question 8", "Question 9", "Question 10"];
-var answerArray = [["A", "B", "C", "D"],["A", "B", "C", "D"],["A", "B", "C", "D"],["A", "B", "C", "D"],["A", "B", "C", "D"],["A", "B", "C", "D"],["A", "B", "C", "D"],["A", "B", "C", "D"],["A", "B", "C", "D"],["A", "B", "C", "D"]];
-var correctAnswers= ["C","C","C","C","C","C","C","C","C","C"];
+var questionArray = ["Name that cheese!", "Name that cheese!", "Name that cheese!", "Name that cheese!", "Name that cheese!", "Name that cheese!", "Name that cheese!", "Name that cheese!", "Name that cheese!", "Name that cheese!"];
+var questionImage = ["<img src='assets/images/gouda.jpg'>","<img src='assets/images/asiago.jpg'>","<img src='assets/images/chevre.jpg'>","<img src='assets/images/feta.jpg'>","<img src='assets/images/manchego.jpg'>", "<img src='assets/images/mascarpone.jpg'>", "<img src='assets/images/mozarella.jpg'>", "<img src='assets/images/parm.jpg'>", "<img src='assets/images/roquefort.jpg'>", "<img src='assets/images/whiz.jpg'>"];
+var answerArray = [["Mozarella", "Cheddar", "Gouda", "Parmesan"],["Asiago", "Gouda", "Brie", "Parmesan"],["Asiago", "Camembert", "Gouda", "Chevre"],["Feta", "Asiago", "Camembert", "Romano"],["Cheddar", "Manchego", "Chevre", "Parmesan"],["Mascarpone", "Manchego", "Roquefort", "Gouda"],["Asiago", "Mozarella", "Manchego", "Camembert"],["Asiago", "Roquefort", "Camembert", "Parmesan"],["Roquefort", "Mozarella", "Camembert", "Gouda"],["Chevre", "Cheddar", "Parmesan", "Not a real cheese food"]];
+var correctAnswers= ["Gouda","Asiago","Chevre","Feta","Manchego","Mascarpone","Mozarella","Parmesan","Roquefort","Not a real cheese food"];
 var answerPicked;
 var countdownTimer;
 var correctTotal = 0;
 var incorrectTotal = 0;
 
 
-
 //Function that creates the Start Button
 function startTrivia() {
-	startGame = "<a class='btn btn-primary btn-lg btn-block start-button' href ='#' role='button'>Start Game</a>"
-	$(".main-space").html(startGame);
+	startGame = "<p><a class='btn btn-primary btn-lg btn-block start-button' href ='#' role='button'>Click Here to Start</a></p>" + "<p><img src = 'assets/images/mouse.jpg'></p>";
+	$(".row-2").html(startGame);
 }
 
 startTrivia();
@@ -26,23 +27,27 @@ startTrivia();
 $(".start-button").on("click", function(event){
 	fillDisplay();
 	runTimer();
+	$(".jumbotron").hide();
+	$(".row-2").hide();
 });
 
 
 
 //Function to provides question
 function fillDisplay() {
-	gameDisplay = "<p class='text-center timer-p'>Time Remaining: <span class ='timer'>20</span></p><p class = 'text-center'>" + questionArray[questionCounter] + "</p><p class ='answer'>" + answerArray[questionCounter][0] + "</p><p class = 'answer'>" + answerArray[questionCounter][1] + "</p><p class = 'answer'>" + answerArray[questionCounter][2] + "</p><p class = 'answer'>" + answerArray[questionCounter][3] + "</p>";
+	gameDisplay = "<p class='text-center timer-p'>Time Remaining: <span class ='timer'>20</span></p><p class = 'text-center'>" + questionArray[questionCounter] + "</p>" + "<p class ='answer btn btn-primary btn-lg btn-block'>" + answerArray[questionCounter][0] + "</p><p class ='answer btn btn-primary btn-lg btn-block'>" + answerArray[questionCounter][1] + "</p><p class ='answer btn btn-primary btn-lg btn-block'>" + answerArray[questionCounter][2] + "</p><p class ='answer btn btn-primary btn-lg btn-block'>" + answerArray[questionCounter][3] + "</p>";
+	gameImage = "<p>" + "<img>" + questionImage[questionCounter];
+	$(".picture").html(gameImage);
 	$(".main-space").html(gameDisplay);
-	console.log("Q #: "+ questionCounter);
+	console.log("?index#: "+ questionCounter);
 }
 
 //Function for the end of the game
 function endGame() {
-	gameDisplay = "<p class = 'text-center timer-p'>Time Remaining: <span class = 'timer'>" + counter + "</span></p>" + "<p class = 'text-center'>GAME OVER: RESULTS" + "</p>" + "<p class = 'totals'>Correct Answers : " + correctTotal + "</p>" + "<p>Incorrect Answers: " + incorrectTotal + "</p>" + "<p>" + "<a class='btn btn-primary btn-lg btn-block restart-button' href ='#' role='button'>Play Again</a>" + "</p>";
+	gameDisplay = 
+	"<p class = 'text-center timer-p'>Time Remaining: <span class = 'timer'>" + counter + "</span></p>" + "<p class = 'text-center'>GAME OVER: RESULTS" + "</p>" + "<p class = 'text-center totals'>Correct Answers : " + correctTotal + "</p>" + "<p class = 'text-center totals'>Incorrect Answers: " + incorrectTotal + "</p>" + "<p>" + "<a class='btn btn-success btn-lg btn-block restart-button' href ='#' role='button'>Play Again</a>" + "</p>";
 	$(".main-space").html(gameDisplay);
 }
-
 
 
 //Function to switch to next question 
